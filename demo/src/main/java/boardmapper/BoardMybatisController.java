@@ -33,7 +33,11 @@ public class BoardMybatisController {
 		
 		//1 multifile1 c:ezwel/upload 파일 저장
 		//2 파일 이름만 db에 저장
-		String savePath = "c:/ezwel/upload/";
+		String savePath = "";
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+        	savePath = "c:/ezwel/upload/";        	
+        } else { savePath = "/Users/minsu/Documents/ezwel/upload/";}
 		String newfilename1 = null;
 		MultipartFile file1 = dto.getMultifile1();
 		if(!file1.isEmpty()) {//f1해당파일선택했다면
