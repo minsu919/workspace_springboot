@@ -20,7 +20,7 @@ else{
 <h3> 서비스는 다음과 같습니다. </h3>
 <h4>
 	<ul>
-		<li><a href="">게시물리스트 보러가기</a>(로그인하지 않아도 됩니다)</li>
+		<li><a href="boardlist">게시물리스트 보러가기</a>(로그인하지 않아도 됩니다)</li>
 		<li><a href="boardwrite" id="boardwritelink">글쓰기</a>(로그인하셔야 합니다)</li>
 		<li><a href="boardlogin">로그인</a></li>
 		<li><a href="boardlogout">로그아웃</a></li>
