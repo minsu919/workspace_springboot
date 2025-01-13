@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 //@ComponentScan(basePackages = "annotation.springmvc")
 //@ComponentScan(basePackages = "myconfig")
 @ComponentScan(basePackages = "boardmapper")
+@ComponentScan(basePackages = "react.ajax")
 //@MapperScan(basePackages = "annotation.springmvc.mybatis")
 @MapperScan(basePackages = "boardmapper")
 public class DemoApplication {
