@@ -56,7 +56,7 @@ public class ReactAjaxController {
 		List<PlayerDTO> playerList = mapper.readValue(json, new TypeReference<ArrayList<PlayerDTO>>() {});
 		for (PlayerDTO dto : playerList) {
 			if (dto.player.equals("son")) {
-			return new PlayerDTO(dto.getPlayer(), dto.getGoal(), "한국", "손흥민");
+			return new PlayerDTO(dto.getPlayer(), dto.getGoal(), "손흥민", "한국");
 			}
 		}
 		return new PlayerDTO("알수없음", 0, "국적모름", "이름모름");
@@ -95,7 +95,7 @@ class PlayerDTO {
 	String fullName;
 	String nation;
 	
-	public PlayerDTO() {} // 원인
+	public PlayerDTO() {}
 	public PlayerDTO(String player, int goal, String fullName, String nation) {
 		super();
 		this.player = player;
