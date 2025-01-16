@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service("boardmembermapperservice")
 public class MemberMapperServiceImpl implements MemberService{
+	
 	@Autowired
 	MemberMapper mapper;
 	

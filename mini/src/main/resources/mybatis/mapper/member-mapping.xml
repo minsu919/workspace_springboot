@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- <mapper namespace="annotation.springmvc.mybatis.MemberMapper"> -->
+
+<mapper namespace="tube.MemberMapper">
+
+<select id="getMember" resultType="memberdto" parameterType="String">
+	select * from members where id=#{id}
+</select>
+
+<insert id="insertMember" parameterType="memberdto">
+insert into members (id, pw, name, phone, isadmin, regdate) values (#{id}, #{pw}, #{name}, #{phone}, #{isadmin}, sysdate)
+</insert>
+
+<update id="updateMember" parameterType="memberdto">
+update members set pw = #{pw}, phone = #{phone} where id = #{id}
+</update>
+
+<select id="checkId" resultType="int" parameterType="String"> select count(*) from members where id = #{id}</select>
+<delete id="deleteMember" parameterType="String">delete from members where id = #{id}</delete>
+<select id="getAllMembers" resultType="memberdto">select id, name, pw, phone from members</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="tube.CommentMapper">
+    <!-- 댓글 관련 SQL 정의 -->
+    <insert id="insertComment" parameterType="commentdto">
+        INSERT INTO comments (seq, boardseq, writer, contents, regdate)
+        VALUES (comments_seq.nextval, #{boardseq}, #{writer}, #{contents}, SYSDATE)
+    </insert>
+    <update id="updateComment" parameterType="commentdto">
+        UPDATE comments
+        SET contents = #{contents},
+            regdate = SYSDATE
+        WHERE seq = #{seq}
+          AND writer = #{writer}
+    </update>
+    <delete id="deleteComment" parameterType="map">
+        DELETE FROM comments
+        WHERE seq = #{seq}
+          AND writer = #{writer}
+    </delete>
+    <select id="getCommentsByBoardSeq" parameterType="int" resultType="commentdto">
+        SELECT seq,
+               boardseq,
+               writer,
+               contents,
+               regdate
+        FROM comments
+        WHERE boardseq = #{boardseq}
+        ORDER BY regdate DESC
+    </select>
+</mapper>

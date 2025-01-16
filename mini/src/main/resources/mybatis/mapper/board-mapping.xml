@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tube.BoardMapper">
+   <insert id="insertBoard" parameterType="boarddto">
+  	insert into boards values((select max(seq) + 1 from boards), #{title}, #{writer} ,sysdate, #{boardtext},  #{photofile}, 0)
+  </insert>
+	
+  <select id="pagingList" resultType="boarddto" parameterType="int">
+  	select * 
+  	from (select rownum r, imsi.*
+  	from (select * from boards order by writingtime desc) imsi)
+  	where r between 
+  	<foreach collection="array" item="num" separator="and">#{num}</foreach>
+  </select>
+
+  <select id="totalCount" resultType="int">
+  	select count(*) from boards
+  </select>
+
+</mapper>

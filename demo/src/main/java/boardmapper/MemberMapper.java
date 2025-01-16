@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MemberMapper {
 	public MemberDTO oneMember(String id);
-	
 }
 //mapper.memberSearchList2(dto);
 

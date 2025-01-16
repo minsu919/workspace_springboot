@@ -11,11 +11,11 @@ public class MyPathConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System.out.println("패스컨피그실행");
 		if (System.getProperty("os.name").contains("Win")) {
-			registry.addResourceHandler("/miniupload/**")
-			.addResourceLocations("file:///c:/ezwel/miniupload/");		
+			registry.addResourceHandler("/upload/**")
+			.addResourceLocations("file:///c:/ezwel/upload/");		
 		} else {
-			registry.addResourceHandler("/miniupload/**")
-			.addResourceLocations("file:////Users/minsu/Documents/ezwel/miniupload/");
+			registry.addResourceHandler("/upload/**")
+			.addResourceLocations("file:////Users/minsu/Documents/ezwel/upload/");
 		}
 	}
 	
