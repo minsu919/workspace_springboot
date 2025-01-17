@@ -10,5 +10,5 @@ public interface CommentService {
 
     String removeComment(int seq, String writer);
 
-    List<CommentDTO> getComments(int boardSeq);
+    List<CommentDTO> getCommentsByBoardSeq(int boardseq);
 }

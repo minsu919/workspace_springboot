@@ -15,7 +15,7 @@ $(document).ready(function(){
 </head>
 <body>
 <h1>
-<h1>글쓰기폼</h1>
+<h1>스튜디오</h1>
 <form action="boardwrite" method="post" enctype="multipart/form-data">
 <label for="title">제목</label><input type=text id="title" name="title"><br>
 <label for="boardtext">내용</label>

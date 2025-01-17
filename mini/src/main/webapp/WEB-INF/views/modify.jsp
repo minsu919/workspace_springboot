@@ -5,6 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 수정</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+	$("#mypage").on('click', function(){
+		window.location.href = "/mypage"; // /mypage로 리다이렉트
+	});
+});
+</script>
 </head>
 <body>
 	<h2>회원 정보 수정</h2>
@@ -22,6 +31,7 @@
         <input type="text" name="phone" pattern="^010-\d{3,4}-\d{4}$" title="010-XXXX-XXXX 형식으로 입력" required><br>
 
         <input type="submit" value="회원 수정">
+        <input type="button" id="mypage" value="돌아가기">
     </form>
     
     <form action="/deleteMember" method="POST">

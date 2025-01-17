@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>미니튜브</title>
+<title>Insert title here</title>
 <script src="js/jquery-3.7.1.min.js"></script>
 <script>
 $(document).ready(function(){
-	
 	$("#register").on('click', function(){
 		window.location.href = "/register";
 	});
@@ -28,11 +27,8 @@ $(document).ready(function(){
 	$("#studio").on('click', function(){
 		window.location.href = "/studio";
 	});
-	
 });
 </script>
-
-<!-- CSS 스타일 추가 -->
 <style>
 
   body {
@@ -87,20 +83,16 @@ $(document).ready(function(){
     color: #333;
   }
 
-  .post-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* 두 카드 사이의 간격 */
-}
   .post-card {
-  width: calc(50% - 10px);
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    display: flex;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
   .post-card:hover {
     transform: scale(1.05);
@@ -108,20 +100,23 @@ $(document).ready(function(){
   }
 
   .post-card img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-}
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
 
-.post-card div {
-  margin-top: 10px;
-}
+  .post-card div {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 
-.post-card div span {
-  font-size: 14px;
-  color: #666;
-}
+  .post-card div span {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
 
   /* 페이지 네비게이션 */
   .pagination {
@@ -154,14 +149,9 @@ $(document).ready(function(){
   
   }
 </style>
-
 </head>
 <body>
-
-<h1>미니튜브</h1>
-<div id="searchbar">
-
-</div>
+<h1><a href="/" style="color: black">미니튜브</a> 검색결과</h1>
 <div class="button-container">
 	<form action="/results" method="get">
 		<input type="text" name="searchquery" id="searchquery" required>
@@ -179,36 +169,20 @@ $(document).ready(function(){
         <input type="button" id="studio" value="스튜디오">
     </c:if>
 </div>
-
 <div id="contents">
-  <h1>게시물리스트</h1>
 
-	<div class="post-list">
-	  <c:forEach items="${boardlist}" var="dto">
-	    <div class="post-card" id='watchseq${dto.seq}'>
-	      <a href='watch?seq=${dto.seq}'>
-	        <img alt="메인페이지이미지" src="imgdownload?filename=${dto.photofile}">
-	        <div>
-	          <span>${dto.title}</span>
-	          <span>${dto.writer}</span>
-	          <span>조회수 ${dto.viewcount}k . ${dto.writingtime}</span>
-	        </div>
-	      </a>
-	    </div>
-	  </c:forEach>
-	</div>
-
-  <div class="pagination">
-    <h3>페이지번호를 선택하세요</h3>
-    <%
-    int total = (Integer)request.getAttribute("total");
-    int totalpage = (total % 4 == 0) ? total / 4 : total / 4 + 1;
-    for (int i = 1; i <= totalpage; i++) {
-    %>
-      <a href="/?pagenum=<%=i %>"><%=i %>페이지</a>
-    <% } %>
-  </div>
-</div>
+  <c:forEach items="${boardlist}" var="dto">
+    <div class="post-card" id='watchseq${dto.seq}'>
+      <a href='watch?seq=${dto.seq}' autofocus="autofocus">
+        <img alt="메인페이지이미지" src="imgdownload?filename=${dto.photofile}">
+        <div id="textcontents">
+          <span>${dto.title}</span>
+          <span>${dto.writer}</span>
+          <span>조회수 ${dto.viewcount}k . ${dto.writingtime}</span>
+        </div>
+      </a>
+    </div>
+  </c:forEach>
 
 </body>
 </html>
