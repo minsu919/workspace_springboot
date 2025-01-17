@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>로그인테스트폼</h1>
-<form action="mypage" method="post">
+<form action="login" method="post">
 	아이디입력:<input type=text name="id" ><br>
 	암호입력:<input type=password name="pw"><br>
 	<input type=submit value="로그인">

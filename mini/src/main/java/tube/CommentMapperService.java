@@ -9,8 +9,11 @@ import java.util.List;
 public class CommentMapperService implements CommentService {
 
     @Autowired
-    private CommentMapper commentMapper;
+    CommentMapper commentMapper;
 
+    void test() {
+    	System.out.println("===>"+commentMapper);
+    }
     @Override
     public String addComment(CommentDTO comment) {
         int result = commentMapper.insertComment(comment);
@@ -30,7 +33,7 @@ public class CommentMapperService implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> getComments(int boardSeq) {
-        return commentMapper.getCommentsByBoardSeq(boardSeq);
+    public List<CommentDTO> getCommentsByBoardSeq(int boardseq) {
+        return commentMapper.getCommentsByBoardSeq(boardseq);
     }
 }

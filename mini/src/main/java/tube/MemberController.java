@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -21,19 +22,6 @@ public class MemberController {
 	@Autowired
 	@Qualifier("membermapperservice")
 	MemberService memberService;
-	
-	
-//	@GetMapping("/")
-//	public ModelAndView mainForm(HttpServletRequest request) {
-//	    ModelAndView mv = new ModelAndView();
-//	    HttpSession session = request.getSession(false); // 세션이 없으면 새로 만들지 않음
-//	    if (session != null) {
-//	        String sessionid = (String) session.getAttribute("sessionid");
-//	        mv.addObject("sessionid", sessionid); // 세션ID를 넘겨줌
-//	    }
-//	    mv.setViewName("start");
-//	    return mv;
-//	}
 	
 	//회원가입
     @GetMapping("/register")
@@ -106,7 +94,7 @@ public class MemberController {
 	    MemberDTO member = memberService.getMember(sessionid);
 	    
 	    mv.addObject("sessionid", sessionid);
-	    mv.addObject("member", member);  // member 객체도 전달
+	    mv.addObject("member", member);
 	    
 	    mv.setViewName("/feed/you");
 	    
@@ -120,36 +108,87 @@ public class MemberController {
 	    
 	    HttpSession session = request.getSession();
 	    String sessionid = (String) session.getAttribute("sessionid");
+	    Boolean pwChecked = (Boolean) session.getAttribute("pwChecked");
 	    
 	    if (sessionid == null) {
 	        mv.setViewName("redirect:/login");
 	        return mv;
 	    }
 	    
-	    MemberDTO member = memberService.getMember(sessionid);
+	    if (pwChecked == null || !pwChecked) {
+	        mv.setViewName("redirect:/mypage");
+	        return mv;
+	    }
 	    
+	    MemberDTO member = memberService.getMember(sessionid);
 	    mv.addObject("member", member);
 	    mv.setViewName("modify");
 	    
 	    return mv;
 	}
 	
+    // 비밀번호 재확인 처리
+	@GetMapping("/modify/pwcheck")
+	public String showPwCheck() {
+	    return "pwcheck";  // 비밀번호 확인 화면 jsp 또는 템플릿 반환
+	}
+	
+	@PostMapping("/modify/pwcheck")
+	public ModelAndView checkPw(String pw, HttpServletRequest request) {
+	    ModelAndView mv = new ModelAndView();
+	    HttpSession session = request.getSession();
+	    String sessionid = (String) session.getAttribute("sessionid");
+
+	    if (sessionid == null) {
+	        mv.setViewName("redirect:/login");
+	        return mv;
+	    }
+
+	    MemberDTO member = memberService.getMember(sessionid);
+	    
+	    if (member != null && member.getPw().equals(pw)) {
+	        session.setAttribute("pwchecked", true);
+	        mv.setViewName("redirect:/modify");
+	    } else {
+	        mv.setViewName("redirect:/modify/pwcheck"); 
+	    }
+
+	    return mv;
+	}
+	
 	//계정 삭제
-	@PostMapping("/deleteMember")
-	public String deleteMember(@RequestParam("id") String id, Model model) {
-		memberService.deleteMember(id);
-		model.addAttribute("message", id + "계정 삭제 완료");
-		
-		return "redirect:/";
+	@RequestMapping(value = "/deleteMember", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView deleteMember(@RequestParam("id") String id, HttpServletRequest request) {
+	    ModelAndView mv = new ModelAndView();
+	    String referer = request.getHeader("Referer");
+	    
+	    memberService.deleteMember(id);
+	    
+	    HttpSession session = request.getSession();
+	    session.removeAttribute("id");
+	    
+	    if (referer != null && referer.contains("localhost:9090/admin")) {
+	        mv.setViewName("redirect:" + referer);
+	    } else {
+	    	session.removeAttribute("sessionid");
+	        mv.setViewName("redirect:/");
+	    }
+	    
+	    return mv;
+	}
+	
+	//관리자 - 계정 삭제
+	@GetMapping("/admin/deleteMember")
+	public ModelAndView deleteMember(@RequestParam("id") String id) {
+	    ModelAndView mv = new ModelAndView();
+	    memberService.deleteMember(id);
+	    return mv;
 	}
 	
 	@PostMapping("/modify")
 	public ModelAndView modify(HttpServletRequest request, String id, String pw, MemberDTO updateMember) {
 		ModelAndView mv = new ModelAndView();
 		MemberDTO dto = memberService.getMember(id);
-		
-			//HttpSession session = request.getSession();
-			//session.setAttribute("sessionid", id);
 
 			dto.setPw(updateMember.getPw());
 			dto.setPhone(updateMember.getPhone());
@@ -171,27 +210,20 @@ public class MemberController {
 	
 	//관리자 - 회원관리
 	@GetMapping("/admin")
-	public String adminPage() {
-		return "/admin/adminpage";
-	}
-	
-	@PostMapping("/admin")
-	public String adminUserManage(HttpServletRequest request, Model model) {
-	    HttpSession session = request.getSession();
-	    String sessionid = (String) session.getAttribute("sessionid");
-	    
-	    if (sessionid == null) {
-	        return "redirect:/login"; 
-	    }
-	    
-	    MemberDTO member = memberService.getMember(sessionid);
-	    if (member != null && member.getIsadmin() == 1) {
-	    	List<MemberDTO> allMembers = memberService.getAllMembers();
-	    	model.addAttribute("allMembers", allMembers);
-	        //model.addAttribute("allPosts", boardService.getAllPosts());
-	        return "/admin";
-	    }
-	    
-	    return "redirect:/"; 
+	public ModelAndView adminpage(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession(false); 
+		    
+		if (session != null) {
+		    String sessionid = (String) session.getAttribute("sessionid");
+		    mv.addObject("sessionid", sessionid);
+		}
+
+		List<MemberDTO> allMembers = memberService.getAllMembers();   
+		mv.addObject("allMembers", allMembers);
+		    
+		mv.setViewName("/admin/adminpage"); 
+		    
+		return mv;
 	}
 }
