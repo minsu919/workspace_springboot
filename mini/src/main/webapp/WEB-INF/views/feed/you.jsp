@@ -23,7 +23,11 @@ $(document).ready(function(){
 	});
 	
 	$("#modify").on('click', function(){
-		window.location.href = "/modify";
+		window.location.href = "/modify/pwcheck";
+	});
+	
+	$("#history").on('click', function(){
+		window.location.href = "/feed/history?id=${member.id}";
 	});
 	
 	// 회원이 업로드한 게시물 리스트 가져오기
@@ -35,7 +39,6 @@ $(document).ready(function(){
 			dataType : 'json',
 			
 			success:function(res){
-				$("#mylist").css("background-color", "silver");
 				$("#mylist").html("");
 				for(let i = 0; i < res.length; i++){
 					$("#mylist").append
@@ -64,7 +67,7 @@ $(document).ready(function(){
   }
 
   .post-card img {
-    width: 100%;
+    width: 30%;
     height: auto;
     object-fit: cover;
     border-radius: 8px;
@@ -81,17 +84,60 @@ $(document).ready(function(){
     color: #666;
     margin-top: 5px;
   }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .button-container input {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff0000;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button-container input:hover {
+    background-color: #cc0000;
+  }
+  
+  .image {
+  	text-align:center;
+  }
+  
 </style>
 </head>
 <body>
-<a href="/"><img height="60" width="80" src="images/minitube.png"></a>
+<div class="image">
+	<a href="/"><img height="60" width="80" src="images/minitube.png"></a>
+</div>
 <h1>${sessionid }</h1>
 <div id="mypage">
-  <p></p>
-  <input type=button id="logout" value="로그아웃">
-  <input type=button id="modify" value="회원정보 수정">
-  <input type=button id="admin" value="관리자 페이지">
-
+  <div class="button-container">
+  	<input type=button id="logout" value="로그아웃">
+  	<input type=button id="modify" value="회원정보 수정">
+  	<input type=button id="admin" value="관리자 페이지">
+  	<input type=button id="hisotry" value="시청 기록">
+  </div>
+  
   <div id="mylist-container">
     <h3>내가 업로드한 게시물</h3>
     <div id='mylist'></div>

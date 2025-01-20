@@ -32,6 +32,9 @@ public class BoardController {
     @Qualifier("boardmapperservice")
     BoardService boardService;
     
+    @Autowired
+    @Qualifier("membermapperservice")
+    MemberService memberService;
     
     // 메인시작페이지
     @RequestMapping("/")
@@ -85,12 +88,25 @@ public class BoardController {
 	}
     
     @RequestMapping("/watch")
-	ModelAndView boarddetail(int seq) {
+	ModelAndView boarddetail(int seq, HttpServletRequest request) {
     	ModelAndView mv = new ModelAndView();
 		BoardDTO dto = boardService.updateViewcountAndGetDetail(seq);
 		mv.addObject("detailboard",dto);
+		//관리자 삭제 기능 추가를 위해 member 불러왔습니다
+		HttpSession session = request.getSession();
+	    String sessionid = (String) session.getAttribute("sessionid");
+	    
+	    if (sessionid == null) {
+	        sessionid = "";  
+	    }
+	    
+	    mv.addObject("sessionid", sessionid);
+	    
+		MemberDTO member = memberService.getMember(sessionid);
+	    mv.addObject("member", member);
 		mv.setViewName("board/boarddetail");
 		return mv;
+
     }
     
     @GetMapping("/imgdownload")

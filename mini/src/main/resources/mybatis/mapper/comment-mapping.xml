@@ -3,8 +3,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="tube.CommentMapper">
-<!--  댓글 관련 SQL 정의  -->
-<insert id="insertComment" parameterType="commentdto"> INSERT INTO comments (seq, boardseq, writer, contents, regdate) VALUES (comments_seq.nextval, #{boardseq}, #{writer}, #{contents}, SYSDATE) </insert>
+<!--  댓글 관련 SQL 정의  --> 
+<insert id="insertComment" parameterType="commentdto"> INSERT INTO comments (seq, boardseq, writer, contents, regdate) VALUES ((select nvl(max(seq), 0) + 1 from comments), #{boardseq}, #{writer}, #{contents}, SYSDATE) </insert>
 <update id="updateComment" parameterType="commentdto"> UPDATE comments SET contents = #{contents}, regdate = SYSDATE WHERE seq = #{seq} AND writer = #{writer} </update>
 <delete id="deleteComment" parameterType="map"> DELETE FROM comments WHERE seq = #{seq} AND writer = #{writer} </delete>
 <select id="getCommentsByBoardSeq" parameterType="int" resultType="commentdto"> SELECT * FROM comments WHERE boardseq = #{boardseq} ORDER BY regdate DESC </select>

@@ -1,5 +1,6 @@
 package tube;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CommentController {
     @Qualifier("commentmapperservice")
     private CommentService commentService;
 
-    // 댓글 추가
+    // 댓글 추가 - 김민수 수정
     @PostMapping("/comments/add")
     @ResponseBody
     public String addComment(@RequestBody CommentDTO comment) {
@@ -56,16 +57,12 @@ public class CommentController {
         }
     }
 
-    // 게시물 상세 보기와 댓글 목록
-    @GetMapping("/watch/{boardseq}")
-    public String watchBoardWithComments(@PathVariable("boardseq") int boardseq, Model model) {
-    	System.out.println("===>"+((CommentMapperService)commentService));
-    	((CommentMapperService)commentService).test();
-        List<CommentDTO> comments = commentService.getCommentsByBoardSeq(boardseq);
-        model.addAttribute("comments", comments);
-        model.addAttribute("boardseq", boardseq);
-        System.out.println("===>"+comments.size());
-        return "board/boarddetail"; // boarddetail.jsp와 매핑
+    // 게시물 상세 보기와 댓글 목록 - 김민수 수정
+    @GetMapping(value="/mycommentlist", produces = {"application/json;charset=utf-8"} )
+    @ResponseBody
+    List<CommentDTO> myCommentlist(int boardseq) {
+    	List<CommentDTO> list = commentService.getCommentsByBoardSeq(boardseq);
+        return list; // boarddetail.jsp와 매핑
     }
 }
 

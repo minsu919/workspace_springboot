@@ -97,6 +97,7 @@ $(document).ready(function(){
   background-color: white;
   padding: 15px;
   border-radius: 8px;
+  border: 2px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
