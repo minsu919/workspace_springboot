@@ -136,6 +136,7 @@ public class MemberController {
 	@PostMapping("/modify/pwcheck")
 	public ModelAndView checkPw(String pw, HttpServletRequest request) {
 	    ModelAndView mv = new ModelAndView();
+	    
 	    HttpSession session = request.getSession();
 	    String sessionid = (String) session.getAttribute("sessionid");
 
@@ -143,14 +144,17 @@ public class MemberController {
 	        mv.setViewName("redirect:/login");
 	        return mv;
 	    }
-
+	    
+	    System.out.println(sessionid);
 	    MemberDTO member = memberService.getMember(sessionid);
 	    
 	    if (member != null && member.getPw().equals(pw)) {
+	    	mv.addObject("member",member);
 	        session.setAttribute("pwchecked", true);
-	        mv.setViewName("redirect:/modify");
+	        mv.setViewName("modify");
 	    } else {
-	        mv.setViewName("redirect:/modify/pwcheck"); 
+	    	System.out.println("뭐지?");
+	        mv.setViewName("redirect:/modify/pwcheck");
 	    }
 
 	    return mv;

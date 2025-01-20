@@ -19,7 +19,7 @@ update members set pw = #{pw}, phone = #{phone} where id = #{id}
 
 <select id="checkId" resultType="int" parameterType="String"> select count(*) from members where id = #{id}</select>
 <delete id="deleteMember" parameterType="String">delete from members where id = #{id}</delete>
-<select id="getAllMembers" resultType="memberdto">select id, name, pw, phone from members</select>
+<select id="getAllMembers" resultType="memberdto">select * from members</select>
 
 </mapper>
 
