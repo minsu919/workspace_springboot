@@ -114,14 +114,15 @@
         
 		<div class="button-container">
         	<input type="submit" value="회원 수정">
-        	<input type="submit" value="회원 삭제" onclick="return confirm('ID:${member.id} 계정을 삭제하려면 확인버튼을 눌러주세요.');">
+        	<input type="button" id="mypage" value="돌아가기">
         </div> 
     </form>
     
     <form action="/deleteMember" method="POST">
     	<div class="button-container">
 	    	<input type="hidden" name="id" value="${member.id}">
-			<input type="button" id="mypage" value="돌아가기">
+			<input type="submit" value="회원 삭제" onclick="return confirm('ID:${member.id} 계정을 삭제하려면 확인버튼을 눌러주세요.');">
+			
 		</div>    
     </form>
 </body>
