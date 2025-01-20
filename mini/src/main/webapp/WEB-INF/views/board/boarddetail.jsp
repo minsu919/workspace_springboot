@@ -71,9 +71,9 @@
                 $("input[name='title']").removeAttr("readonly");
             }
             
-            $("#listbtn").on('click', function(){
+            /* $("#listbtn").on('click', function(){
                 location.href = "/";
-            });
+            }); */
             
             $("#deletebtn").on('click', function(){
                         $.ajax({
@@ -153,10 +153,127 @@
         });
         </script>
 
+<!-- css -->
+    <style>
+   body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 80%; 
+        margin: auto;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 30px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    #post-detail {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px; 
+        margin-bottom: 30px; 
+        background-color: #fafafa;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #post-detail img {
+        max-width: 100%; 
+        width: 80%; 
+        height: auto; 
+        margin-top: 15px; 
+        margin-bottom: 15px; 
+        border-radius: 5px; 
+    }
+
+    #comments-section {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px; 
+        background-color: #fafafa;
+    }
+
+    #comments-list div {
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+    }
+
+    #comments-list div:last-child {
+        border-bottom: none;
+    }
+
+    textarea, input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px; 
+        margin-top: 12px; 
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 12px 24px; 
+        border: none;
+        border-radius: 5px;
+        background-color: #ff0000;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+
+    #comment-form {
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+    }
+
+    #post-detail .writer-button {
+        display: none;
+    }
+  
+ 
+        }
+        
+    </style>
+
 </head>
 <body>
     <div class="container">
-        <h1>게시물 ${detailboard.seq }</h1><input type=button value="미니튜브" id="listbtn">
+        <div class="start_image">
+	<a href="/"><img height="30" width="45" src="images/minitube.png"></a>
+		</div>
+        <h1>게시물 ${detailboard.seq }</h1>
 
         <!-- 게시물 정보 -->
         <div id="post-detail">
