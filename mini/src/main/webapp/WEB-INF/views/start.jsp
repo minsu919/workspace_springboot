@@ -200,13 +200,13 @@ $(document).ready(function(){
 	</div>
 
   <div class="pagination">
-    <h3>페이지번호를 선택하세요</h3>
+    <h3>페이지</h3>
     <%
     int total = (Integer)request.getAttribute("total");
     int totalpage = (total % 4 == 0) ? total / 4 : total / 4 + 1;
     for (int i = 1; i <= totalpage; i++) {
     %>
-      <a href="/?pagenum=<%=i %>"><%=i %>페이지</a>
+      <a href="/?pagenum=<%=i %>"><%=i %></a>
     <% } %>
   </div>
 </div>

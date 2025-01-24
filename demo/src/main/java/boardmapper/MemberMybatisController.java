@@ -33,7 +33,6 @@ public class MemberMybatisController {
 			session.setAttribute("sessionid", id);
 		}
 		return "board/start";
-		
 	}
 
 	@RequestMapping("/boardlogout")

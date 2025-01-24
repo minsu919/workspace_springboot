@@ -10,5 +10,9 @@ public interface BoardService {
 	BoardDTO updateViewcountAndGetDetail(int seq);
 	int deleteBoard(int seq);
 	int updateBoard(BoardDTO dto);
+	BoardWriterDTO getBoardWriterInfo(int seq);
+	MemberBoardDTO getMemberAndboardInfo(String id);
+
+
 
 }

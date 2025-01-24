@@ -7,6 +7,8 @@
 <typeAliases>
 <typeAlias type="boardmapper.MemberDTO" alias="memberdto"/>
 <typeAlias type="boardmapper.BoardDTO" alias="boarddto"/>
+<typeAlias type="boardmapper.MemberBoardDTO" alias="memberboarddto"/>
+<typeAlias type="boardmapper.BoardWriterDTO" alias="boardwriterdto"/>
 
 </typeAliases>
 

@@ -122,5 +122,19 @@ public class BoardMybatisController {
 		fin.close();
 		out.close();
 	}
+	
+	@RequestMapping("/boardwriterinfo")
+	@ResponseBody
+	BoardWriterDTO boardwriterinfo(int seq) {
+		BoardWriterDTO dto = boardService.getBoardWriterInfo(seq);
+		return dto;
+	}
+	
+	@RequestMapping("/memberandboardinfo")
+	@ResponseBody
+	MemberBoardDTO memberandboardinfo(String id) {
+		MemberBoardDTO dto = boardService.getMemberAndboardInfo(id);
+		return dto;
+	}
 
 }
