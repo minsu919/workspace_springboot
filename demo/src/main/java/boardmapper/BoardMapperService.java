@@ -11,6 +11,9 @@ public class BoardMapperService implements BoardService{
 	@Autowired
 	BoardMapper mapper;
 	
+	@Autowired
+	BoardWriterMapper mapper2;
+	
 	@Override
 	public String registerBoard(BoardDTO dto) {
 		int result = mapper.insertBoard(dto);
@@ -46,6 +49,16 @@ public class BoardMapperService implements BoardService{
 	@Override
 	public int updateBoard(BoardDTO dto) {
 		return mapper.updateBoard(dto);
+	}
+
+	@Override
+	public BoardWriterDTO getBoardWriterInfo(int seq) {
+		return mapper2.getBoardWriterInfo(seq);
+	}
+
+	@Override
+	public MemberBoardDTO getMemberAndboardInfo(String id) {
+		return mapper2.getMemberAndboardInfo(id);
 	}
 	
 	

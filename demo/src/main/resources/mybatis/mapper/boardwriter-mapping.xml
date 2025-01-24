@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="boardmapper.BoardMapper">
+  		<resultMap type="boardmapper.BoardWriterDTO" id="boardwriterinfo">
+  			<id column="seq" property="seq"/>
+  			<result column="title" property="title"/>
+  			<result column="contents" property="contents"/>
+  			<result column="viewcount" property="viewcount"/>
+  			<result column="writingtime" property="writingtime"/>
+  			
+  			<association property="writerdto" javaType="boardmapper.MemberDTO">
+  				<result column="id" property="id"/>
+  				<result column="name" property="name"/>
+  				<result column="email" property="email"/>
+  				<result column="phone" property="phone"/>
+  				<result column="regdate" property="regdate"/>
+  			</association>
+  		</resultMap>
+  		
+  		<resultMap type="boardmapper.MemberBoardDTO" id="memberBoardInfo">
+  			<id column="id" property="id"/>
+  			<result column="name" property="name"/>
+  			<result column="pw" property="pw"/>
+  			<result column="email" property="email"/>
+  			<result column="phone" property="phone"/>
+  			<result column="regdate" property="regdate"/>
+  			
+  			<collection column="id" property="boarddtolist" javaType="java.util.List" ofType="boarddto" select="getMemberBoardInfo">
+  				<id column="seq" property="seq"/>
+  				<result column="title" property="title"/>
+  				<result column="contents" property="contents"/>
+  			    <result column="viewcount" property="viewcount"/>
+  			    <result column="writingtime" property="writingtime"/>
+  			</collection>
+  		</resultMap>
+  		
+  		
+  		<select id="getBoardWriterInfo" resultMap="boardwriterinfo">
+	  		select seq, title, contents, viewcount, writingtime, id, name, email, phone, regdate
+	  		from board b join members m on b.writer=m.id
+	  		where seq=#{seq}
+  		</select>
+  		
+  		<select id="getMemberBoardInfo" resultType="boarddto">
+  			select * from board where writer=#{id} order by writingtime desc
+  		</select>
+  		
+  		<select id="getMemberAndBoardInfo" resultMap="memberBoardInfo">
+	  		select * from members where id=#{id}
+  		</select>
+ 
+  </mapper>
