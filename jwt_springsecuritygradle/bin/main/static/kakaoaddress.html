@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<input type=button id="start" value="위치추적 시작">
+<input type=button id="stop" value="위치추적 종료">
+<div id="result">위치결과(위, 경도)</div>
+<div id="result2">주소결과(주소)</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=be0e01c5c2790a98e1447bd6a913c895&libraries=services"></script>
+<script>
+let watchid;
+document.getElementById("start").onclick = function(){
+	watchid = window.navigator.geolocation.watchPosition(success, fail);
+}
+document.getElementById("stop").onclick = function(){
+	window.navigator.geolocation.clearWatch(watchid);
+}
+
+function success(myposition){// 위치정보객체
+	//위도필수. 경도필수, 고도옵션 (북위 36-38, 동경 126-128)
+	let lat = myposition.coords.latitude; //위도
+	let lng = myposition.coords.longitude; //경도
+	document.getElementById("result").innerHTML = "나의 위도=" + lat + ", 경도= " + lng;
+	//window.open("http://www.google.co.kr/maps/?q="+ lat + "," + lng, "googlemap", "width=800, height=600, resizable=yes");
+	//window.open("http://map.kakao.com/?q="+ lat + "," + lng, "kakaomap", "width=400, height=300, resizable=yes");
+	//window.open("http://map.naver.com/v5/?q="+ lat + "," + lng, "navermap", "width=100, height=100, resizable=yes");	
+	// 주소변환 api - ncp, kakao, ... -회원로그인, key인증
+	var geocoder = new kakao.maps.services.Geocoder();
+	// 좌표를 행정동 주소 정보 변환
+	geocoder.coord2RegionCode(lng, lat, callback);
+	function callback(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+
+	    	document.getElementById("result2").innerHTML = '지역 명칭 : ' + result[0].address_name;
+	    	document.getElementById("result2").innerHTML += '행정구역 코드 : ' + result[0].code ;
+	    }
+	};
+	// 좌표를 상세 주소 정보 변환
+	var callback2 = function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	    	document.getElementById("result2").innerHTML += '상세주소 : ' + result[0].address.address_name;
+	    }
+	};
+
+	geocoder.coord2Address(coord.getLng(), coord.getLat(), callback2);
+}
+
+function fail(error){// 위치정보객체
+	//위도필수. 경도필수, 고도옵션 (북위 36-38, 동경 126-128)
+	document.getElementById("result").innerHTML = "오류발생" + error.code + " : " + error.message;
+}
+
+</script>
+</body>
+</html>
