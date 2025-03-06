@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	/* let a = "공백으로 문자열을 분리합니다.".split(" ");//배열
+	document.write(`<h3>${typeof(a)}</h3>`); //배열도 일종의 객체 취급.
+	document.write(`<h3>${a.constructor.name}</h3>`); // 결과 Array 출력.
+	document.write(`<h3>${a.length}</h3>`); */
+	
+	// 비구조 할당 문법 - 배열 구조 분해. 각 변수 문자열
+	/* let [str1, str2, str3] = "공백으로 문자열을 분리합니다.".split(" ");
+	document.write(`<h3>${typeof(str1)}</h3>`);
+	document.write(`<h3>${typeof(str2)}</h3>`);
+	document.write(`<h3>${typeof(str3)}</h3>`); */
+	
+	
+	// ...연산자 : 비구조화 할당 잔여 연산자
+	/* let [str1, str2, str3, ...str4] = "공백으로 문자열을 분리하여 각각의 문자열 변수에 저장합니다.".split(" ");
+	document.write(`<h3>${str1.constructor.name} : ${str1}</h3>`);
+	document.write(`<h3>${str2.constructor.name} : ${str2}</h3>`);
+	document.write(`<h3>${str3.constructor.name} : ${str3}</h3>`);
+	document.write(`<h3>${str4.constructor.name} : ${str4}</h3>`); */
+	
+	// ...연산자
+ 	/* let originEmp = {id:100, name:'김사원', dept:"인재개발부"};
+	// 복사본 1개 전달, 원본 유지
+	//let copyEmp = {...originEmp} ;
+	let copyEmp = originEmp; //let 말고 const가 되면 안바뀌나요
+
+	copyEmp.name = "박대리";
+	document.write(`<h3> 카피: ${copyEmp.name}  | 오리진: ${originEmp.name}</h3>`); */
+	
+	
+	//배열 메소드
+	/* push(), unshift(), pop(), shift() */
+	/* let boardList = [
+    {seq:'1', title:'제목1', writer:"작성자1", view:"10"},
+    {seq:'2', title:'제목2', writer:"작성자2", view:"11"},
+    {seq:'3', title:'제목3', writer:"작성자3", view:"30"},
+    {seq:'4', title:'제목4', writer:"작성자4", view:"55"},
+    {seq:'5', title:'제목5', writer:"작성자5", view:"0"}
+	]; */
+	
+/* 	let boardTable = `<table border=3>`;
+	boardList.forEach(function(data, index){
+		boardTable += `<tr><td>${data.seq}</td><td>${data.title}</td><td>${data.writer}</td><td>${data.view}</td></tr>`
+	});
+	boardTable += `</table>`;
+ */	
+/* 	document.write(boardTable);
+ */	
+	// 컬백함수 내용 실행한 결과물 반복시마다 모아서 결과 리턴 o	
+/* 	let boardList2 = boardList.map(function(data, index){
+		return `<tr><td>${data.seq}</td><td>${data.title}</td><td>${data.writer}</td><td>${data.view}</td></tr>`
+	});
+	
+	document.write(boardList2); // boardList2 : 배열이다 */
+	
+	// 함수 리턴값이 조건에 따라 다른경우 if/else 블록 사용하지않고 조건3항연산자 
+	/* function test(i){
+		if (i >= 100){return i;}
+		else {return 100}; 
+		return i >= 100? i : 100;
+	}
+	document.write(test(101) + "<br>");
+	document.write(test(78) + "<br>");  */
+
+	// 함수 형태 :
+	/*
+	함수 형태 익명함수 함수선언식
+	*/
+	
+	let anony1 = function(){document.write("익명함수 호출<br>");};
+	function func1(){document.write("유명함수 호출<br>");}
+	let arrow1 = () => {document.write("화살표함수 호출<br>");} ;
+	
+	let anony2 = function(i){document.write("익명함수 호출 " + i + "<br>");};
+	let arrow2 = i => {document.write("arrow2함수 호출 " + i + "<br>");};// 매개 변수 1개인 화살표는 ()없이 매개변수명 표현 가능
+	let arrow3 = (i,j,k) => document.write("arrow3함수 호출 " + (i+j+k) + "<br>"); // 매개 변수 1개인 화살표는 ()없이 매개변수명 표현 가능
+	let arrow4 = i => i*i; // 문장 1개 포함하고 return문이면 return키워드 없이 표현 가능
+
+/* 	anony1();
+	arrow2(2);
+	arrow3(1,2,3);
+	document.write(`화살표함수에서 리턴값=${arrow4(5)}`); */
+	
+	//class 문법
+	//객체생성1 = 미리 값 지정하고 객체 생성=객체 literal 형식 표현
+let obj1 = {id:100 , name:"홍길동", dept:"it", print:function(){ }};
+let obj2 = {id:200 , name:"김사원", dept:"총무부", print:function(){ }};
+alert(obj1.id + ":" + obj1.name + ":" + obj1.dept);
+alert(obj2.id + ":" + obj2.name + ":" + obj2.dept);
+
+//객체생성2 = 생성자함수 정의-호출  이용(반복 같은 속성과 메소드 가진 객체 여러번 생성)
+function Emp(id, name, dept){
+	this.id = id;
+	this.name = name;
+	this.dept = dept;
+	this.print = function(){}
+}
+
+let emp1 = new Emp(100, "홍길동", "it");
+let emp2 = new Emp(200, "김사원", "총무부");
+alert(emp1.id + ":" + emp1.name + ":" + emp1.dept);
+alert(emp2.id + ":" + emp2.name + ":" + emp2.dept);
+	
+	class Employee{
+		constructor(id, name, dept){
+			this.id = id;
+			this. name = name;
+			this.dept = dept;
+		}
+		
+		print(){
+			document.write(`회사원 사번 : ${this.id}, 이름: ${this.name}, 부서: ${this.dept}`)
+		}
+	}
+	
+	let emp3 = new Employee(100, '홍길동','인사');
+	let emp4 = new Employee(200, '저길동','it');
+	emp3.print();
+	emp4.print();
+
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
